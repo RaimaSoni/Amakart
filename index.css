@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@300;400&display=swap");
+.subheader-container {
+  position: sticky;
+  z-index: 1024;
+  top: 66px; }
+  .subheader-container ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    background-color: white;
+    box-shadow: 0 15px 10px -15px #1111112b;
+    padding: 0 32px;
+    overflow-x: auto; }
+    .subheader-container ul li a {
+      display: inline-block;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      transition: background 100ms ease-in-out;
+      white-space: nowrap; }
+      .subheader-container ul li a.active, .subheader-container ul li a:hover {
+        background-color: #e96125;
+        color: white; }
+
+@media screen and (max-width: 768px) {
+  .subheader-container ul {
+    padding: 0 16px; } }
+
+* {
+  box-sizing: border-box; }
+
+html {
+  font-family: 'Doppio One', sans-serif; }
+
+body {
+  line-height: 1.5;
+  margin: 0;
+  position: relative; }
+
+.img-fluid {
+  max-width: 100%;
+  height: auto; }
+
+footer {
+  padding: 30px 0;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 24px;
+  font-family: Roboto;
+  color: gray;
+  background-color: rgba(0, 0, 0, 0.2); }
+Foo

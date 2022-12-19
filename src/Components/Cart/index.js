@@ -19,30 +19,15 @@ const Cart = () => {
     const handleOrderModal = () => {
         setShowModal(false);
         dispatch(clearCartHandler())
-        // dispatch ({
-        //     type : "CLEAR_CART"
-        // })
         setOrderModal(previous => !previous)
     }
 
     const dispatchEvents = (type, item) => {
         if(type === 1){
-            dispatch(addItemHandler(item))
-            // dispatch ({
-            //     type : "ADD_ITEM",
-            //     payload : {
-            //         item : item
-            //     }
-            // })        
+            dispatch(addItemHandler(item))      
         }
         else if (type === -1){
             dispatch(removeItemHandler(item.id))
-            // dispatch ({
-            //     type: "REMOVE_ITEM",
-            //     payload : {
-            //         id : item.id
-            //     }
-            // })
         }
     }
 
@@ -68,27 +53,6 @@ const Cart = () => {
                         <div className="checkout-modal_list">
                             {
                                 items.length > 0 ?
-                                // <div className="checkout-modal_list-item">
-                                //     <div className="img-wrap">
-                                //         <img src={"/assets/placeholder.png"} className="img-fluid" alt="Placeholder"/>
-                                //     </div>
-                                //     <div className="information">
-                                //         <div>
-                                //             <h4>Title of the Product</h4>
-                                //             <div className="pricing">
-                                //                 <span>2000</span>
-                                //                 <small>
-                                //                     <strike>2500</strike>
-                                //                 </small>
-                                //             </div>
-                                //         </div>
-                                //         <div className="cart-addon cart-addon__modal">
-                                //             <button>-</button>
-                                //             <span className="counter">{0}</span>
-                                //             <button>+</button>
-                                //         </div>
-                                //     </div>
-                                // </div> :
                                 items.map(item => {
                                     return (<CartItem 
                                     data={item} 
@@ -107,12 +71,6 @@ const Cart = () => {
                                     <h4>Total Amount: </h4>
                                     <h4>
                                         { totalAmount }
-                                        {/* {
-                                            items.reduce((previous, current) => {
-                                                return previous + (current.discountedPrice * current.quantity)
-
-                                            }, 0)
-                                        } */}
                                         <span style={{marginLeft:"4px"}}>INR</span>
                                     </h4>
                                 </div>

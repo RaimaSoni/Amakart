@@ -2,7 +2,7 @@ import ListItem from "./ListItems/ListItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../UI/Loader";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
  
 //MORE OPTIMIZED APPROACH USING async and await
 const Products = () => {
@@ -10,6 +10,8 @@ const Products = () => {
     const [loader, setLoader] = useState(true)
     const params = useParams()
     const navigate = useNavigate() 
+    const { search } = useLocation()
+    const queryParams = new URLSearchParams(search).get("search")
 
     useEffect(() => {
         async function fecthItems () {
@@ -17,6 +19,9 @@ const Products = () => {
                 let slug = `items.json`
                 if (params.category){
                     slug = `items-${params.category}.json`
+                }
+                if(queryParams){
+                    slug += `?search=${queryParams}`
                 }
                 const response = await axios.get(`https://amakart-46737-default-rtdb.firebaseio.com/${slug}`)
                 const data= response.data
@@ -48,8 +53,7 @@ const Products = () => {
             setItems([])
             setLoader(true)
         }
-
-    }, [params])
+    }, [params.category, queryParams])
 
 
     const handleNotFound = () => {

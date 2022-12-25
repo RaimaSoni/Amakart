@@ -1,7 +1,7 @@
 import Products from "./Components/Products/Products";
 import Header from "./Components/Layout/Header";
 import Subheader from "./Components/Layout/Subheader";
-import {Routes , Route, Navigate} from "react-router-dom";
+import {Routes , Route} from "react-router-dom";
 
 const App = () => {
   return (
@@ -14,7 +14,6 @@ const App = () => {
         <Route path="/:category?" element={<Products/>}>
         </Route>
         </Routes>
-        {/* <Navigate to="/404" element={<h1>Not Found!!</h1>} /> */}
     </div>
   );
 }

@@ -2,17 +2,30 @@ import ListItem from "./ListItems/ListItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../UI/Loader";
+import { useNavigate, useParams } from "react-router";
  
 //MORE OPTIMIZED APPROACH USING async and await
 const Products = () => {
     const [items, setItems] = useState([])
     const [loader, setLoader] = useState(true)
- 
+    const params = useParams()
+    const navigate = useNavigate() 
+
     useEffect(() => {
         async function fecthItems () {
             try{
-            const response = await axios.get(`https://amakart-46737-default-rtdb.firebaseio.com/items.json`)
-            const data= response.data
+                let slug = `items.json`
+                if (params.category){
+                    slug = `items-${params.category}.json`
+                }
+                const response = await axios.get(`https://amakart-46737-default-rtdb.firebaseio.com/${slug}`)
+                const data= response.data
+
+                if (!data) {
+                    handleNotFound();
+                    return;
+                }
+
                 const transformedData = data.map((item, index) => {
                     return {
                         ...item,
@@ -30,106 +43,20 @@ const Products = () => {
             }
         }
         fecthItems();
-    }, [])
 
-    // useEffect(() =>{
-    //     if (eventState.id > -1) {
-    //         if (eventState.type === 1){
-    //             handleAddItem(eventState.id)
-    //         }
-    //         else if (eventState.type === -1){
-    //             handleRemoveItem(eventState.id)
-    //         }
-    //     }
-    // }, 
-    // [eventState])
+        return () => {
+            setItems([])
+            setLoader(true)
+        }
 
-    // const handleAddItem = id => {
-    //     let data = [...items]
-    //     let index = data.findIndex(i => i.id === id)
-    //     data[index].quantity += 1
+    }, [params])
 
-    //     setItems([...data])
-    //     onAddItem(data[index]);
-    //     // if (presentItems.indexOf(id) > -1){
-    //     //     return;
-    //     // }
-    //     // setPresentItems([...presentItems, id])
-    //     // onAddItem();
-    // }
- 
-    // const handleRemoveItem = id => {
-    //     let data = [...items]
-    //     let index = data.findIndex(i => i.id === id)
-    //     if (data[index].quantity !== 0){
-    //         data[index].quantity -= 1
-    //         setItems([...data])
-    //         onRemoveItem(data[index])
-    //     }
-    //     // let index = presentItems.indexOf(id)
-    //     // if (index > -1){
-    //     //     let items = [...presentItems]
-    //     //     items.splice(index, 1)
-    //     //     setPresentItems([...items]);
-    //     //     onRemoveItem();
-    //     // }
-    // }
 
-// const Products = () => {
-//     const [items, setItems] = useState([])
-//         // {
-//         //     id : 0,
-//         //     title: "title of the item",
-//         //     price: 300,
-//         //     discountedPrice: 200,
-//         //     thumbnail: "placeholder.png"
-//         // },
-//         // {
-//         //     id : 1,
-//         //     title: "title of the item",
-//         //     price: 100,
-//         //     discountedPrice: 50,
-//         //     thumbnail: "placeholder.png"
-//         // },
-//         // {
-//         //     id : 2,
-//         //     title: "title of the item",
-//         //     price: 500,
-//         //     discountedPrice: 460,
-//         //     thumbnail: "placeholder.png"
-//         // },
-//         // {
-//         //     id : 3,
-//         //     title: "title of the item",
-//         //     price: 50,
-//         //     discountedPrice: 16,
-//         //     thumbnail: "placeholder.png"
-//         // }
+    const handleNotFound = () => {
+        //use this instead of navigate.push
+        navigate("/404")
+    }
 
-//         useEffect(() => {
-//             //fetch API method
-//     // fetch(`https://amakart-46737-default-rtdb.firebaseio.com/items.json`)
-//     // .then(response => response.json())
-//     // .then(data => {
-//     //     console.log(data)
-//     // })
-//     //AXIOS method
-//     axios.get(`https://amakart-46737-default-rtdb.firebaseio.com/items.json`)
-//     .then(response => {
-//         const data = response.data
-//         const transformedData = data.map((item, index) => {
-//             return {
-//                 ...item,
-//                 id : index
-//             }
-//         })
-//         setItems(transformedData)
-//         console.log(transformedData)
-//     })
-//     .catch(error => {
-//         console.log(error)
-//     })
-// }, [])
 
     return (
         <>
